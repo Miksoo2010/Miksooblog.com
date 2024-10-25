@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Technologiczny</title>
+    <style>
+        /* Stylowanie ogólne */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+        }
+        nav {
+            background-color: #444;
+            padding: 10px;
+            text-align: center;
+            position: relative;
+        }
+        nav a {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        article {
+            margin-bottom: 30px;
+        }
+        article h2 {
+            color: #333;
+        }
+        article p {
+            line-height: 1.6;
+            color: #666;
+        }
+        article img {
+            max-width: 100%;
+            height: auto;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: left; /* Zmiana na lewo */
+            padding: 10px 20px; /* Dodanie paddingu */
+            margin-top: 20px;
+        }
+        /* Sekcje stron */
+        .section, .sub-section {
+            display: none;
+        }
+        /* Stylowanie aktywnej sekcji */
+        .active {
+            display: block;
+        }
+        /* Stylowanie podzakładek */
+        .dropdown {
+            display: none;
+            background-color: #555;
+            position: absolute;
+            width: 150px;
+            text-align: left;
+            padding: 10px;
+        }
+        .dropdown a {
+            display: block;
+            color: #fff;
+            padding: 5px;
+        }
+        .nav-item {
+            position: relative;
+            display: inline-block;
+        }
+        /* Aktywne menu rozwijane */
+        .dropdown.active {
+            display: block;
+        }
+        /* Styl dla ikon społecznościowych */
+        .social-icon {
+            width: 30px;
+            height: 30px;
+            margin: 0 5px;
+            vertical-align: middle;
+        }
+    </style>
+    <script>
+        // Funkcja przełączania sekcji strony
+        function showSection(sectionId) {
+            document.querySelectorAll('.section, .sub-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        // Funkcja przełączania widoczności dropdown
+        function toggleDropdown(dropdownId) {
+            document.querySelectorAll('.dropdown').forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+            document.getElementById(dropdownId).classList.toggle('active');
+        }
+
+        // Funkcja zamykania dropdownów przy kliknięciu poza menu
+        document.addEventListener('click', function(event) {
+            const isDropdown = event.target.matches('.dropdown, .dropdown *');
+            const isNavLink = event.target.matches('.nav-item > a');
+            if (!isDropdown && !isNavLink) {
+                document.querySelectorAll('.dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+
+    <!-- Nagłówek strony -->
+    <header>
+        <h1>MIKSOOBLOG</h1>
+        <p>Wiadomości, artykuły i porady z branży IT</p>
+    </header>
+
+    <!-- Menu nawigacyjne -->
+    <nav>
+        <a href="#" onclick="showSection('home')">Strona główna</a>
+        
+        <!-- Zakładka Poradniki z rozwijanym menu -->
+        <div class="nav-item">
+            <a href="#" onclick="toggleDropdown('guidesDropdown')">Poradniki</a>
+            <div id="guidesDropdown" class="dropdown">
+                <a href="#" onclick="showSection('updates')">Aktualizacje</a>
+                <a href="#" onclick="showSection('coding-tips')">Porady programistyczne</a>
+                <a href="#" onclick="showSection('best-practices')">Najlepsze praktyki</a>
+                <a href="#" onclick="showSection('tools')">Narzędzia technologiczne</a>
+                <a href="#" onclick="showSection('security')">Bezpieczeństwo w IT</a>
+                <a href="#" onclick="showSection('new-guide')">Nowy poradnik</a>
+            </div>
+        </div>
+
+        <!-- Zakładka O mnie z rozwijanym menu -->
+        <div class="nav-item">
+            <a href="#" onclick="toggleDropdown('aboutDropdown')">O mnie</a>
+            <div id="aboutDropdown" class="dropdown">
+                <a href="#" onclick="showSection('about-me')">Moja historia</a>
+                <a href="#" onclick="showSection('my-experience')">Moje doświadczenie</a>
+                <a href="#" onclick="showSection('my-goals')">Moje cele</a>
+            </div>
+        </div>
+
+        <!-- Zakładka Świat technologiczny z rozwijanym menu -->
+        <div class="nav-item">
+            <a href="#" onclick="toggleDropdown('techWorldDropdown')">Świat technologiczny</a>
+            <div id="techWorldDropdown" class="dropdown">
+                <a href="#" onclick="showSection('latest-tech')">Wiadomości technologiczne</a>
+                <a href="#" onclick="showSection('tech-trends')">Trendy technologiczne</a>
+                <a href="#" onclick="showSection('tech-innovations')">Innowacje technologiczne</a>
+                <a href="#" onclick="showSection('gadgets')">Gadżety technologiczne</a>
+                <a href="#" onclick="showSection('software')">Oprogramowanie</a>
+                <a href="#" onclick="showSection('industry-news')">Wiadomości z branży</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sekcja główna -->
+    <div class="container">
+
+        <!-- Sekcja Strona Główna -->
+        <div id="home" class="section active">
+            <article>
+                <h2>Witamy na MIKSOOBLOG</h2>
+                <p>Witaj na moim blogu, tutaj sie dowiesz o moim zyciu i o technologi 
+                    ZAPRASZAM Cię na zakładki gdzie bedziesz mogł skorzystac z jakiego poradnika lub obserowac swiat technologiczny</p>
+            </article>
+        </div>
+
+        <!-- Sekcja Aktualizacje -->
+        <div id="updates" class="sub-section">
+            <article>
+                <h2>Aktualizacje popularnych narzędzi deweloperskich</h2>
+                <img src="https://via.placeholder.com/800x400" alt="Aktualizacje narzędzi" />
+                <p>Nowe wersje popularnych frameworków i bibliotek przynoszą usprawnienia, które ułatwiają pracę i zwiększają wydajność.</p>
+            </article>
+        </div>
+
+        <!-- Sekcja Porady programistyczne -->
+        <div id="coding-tips" class="sub-section">
+            <article>
+                <h2>Porady programistyczne</h2>
+                <p>W tej sekcji znajdziesz praktyczne porady, które pomogą Ci w codziennej pracy programisty.</p>
+            </article>
+        </div>
+
+        <!-- Sekcja Najlepsze praktyki -->
+        <div id="best-practices" class="sub-section">
+            <article>
+                <h2>Najlepsze praktyki w programowaniu</h2>
+                <p>Dowiedz się, jakie są najlepsze praktyki w programowaniu, które pomogą Ci tworzyć lepszy kod.</p>
+            </article>
+        </div>
+
+        <!-- Sekcja Narzędzia technologiczne -->
+        <div id="tools" class="sub-section">
+            <article>
+                <h2>Narzędzia technologiczne</h2>
+                <p>Odkryj narzędzia, które mogą zwiększyć Twoją produktywność i ułatwić rozwój aplikacji.</p>
+            </article>
+        </div>
+
+        <!-- Sekcja Bezpieczeństwo w IT -->
+        <div id="security" class="sub-section">
+            <article>
+                <h2>Bezpieczeństwo w IT</h2>
+                <p>W dzisiejszym świecie bezpieczeństwo cyfrowe jest kluczowe. Dowiedz się, jak chronić swoje dane i systemy.</p>
+            </article>
+        </div>
+
+        <!-- Sekcja Nowy poradnik -->
+        <div id="new-guide" class="sub-section">
+            <article>
+                <h2>Nowy Poradnik</h2>
+                <p>Wkrótce dodamy nowe poradniki, które pomogą Ci w rozwoju umiejętności technologicznych.</p>
+            </article>
+        </div>
+
+        <!-- Sekcja O mnie -->
+        <div id="about-me" class="sub-section">
+            <article>
+                <h2>Moja historia</h2>
+                <p>Jestem pasjonatem technologii, który od wielu lat działa w branży IT. W tej sekcji opowiem Ci o mojej drodze do tego, co robię dzisiaj.</p>
+            </article>
+        </div>
+
+        <!-- Sekcja Moje doświadczenie -->
+        <div id="my-experience" class="sub-section">
+            <article>
+                <h2>Moje doświadczenie</h2>
+                <p>Pracowałem nad wieloma projektami, które pomogły mi rozwijać moje umiejętności i zdobywać nowe doświadczenia.</p>
+            </article>
+        </div>
+
+        <!-- Sekcja Moje cele -->
+        <div id="my-goals" class="sub-section">
+            <article>
+                <h2>Moje cele</h2>
+                <p>Moim celem jest ciągły rozwój w dziedzinie technologii oraz dzielenie się wiedzą z innymi.</p>
+            </article>
+        </div>
+
+        <!-- Sekcja Najnowsze technologie -->
+        <div id="latest-tech" class="sub-section">
+            <article>
+                <h2>Wiadomości technologiczne</h2>
+                <p>Tutaj bedą Aktualizowane Wiadomości technologiczne:</p>
+                <p>25 Października 2024</p>
+                <p>JUZ Dizsiaj 25 Października odbedzie się najwieksza wystawa AudioSHOW w warszawie
+                    Na wystawie można zobaczyc najwieszke firmy audio 
+                </p>
+                <img src="https://audioshow.pl/gfx/logo.svg" 
+            </article>
+        </div>
+
+        <!-- Sekcja Trendy technologiczne -->
+        <div id="tech-trends" class="sub-section">
+            <article>
+                <h2>Trendy technologiczne</h2>
+                <p>Śledź najnowsze trendy w technologii i dowiedz się, co może przynieść przyszłość.</p>
+            </article>
+        </div>
+
+        <!-- Sekcja Innowacje technologiczne -->
+        <div id="tech-innovations" class="sub-section">
+            <article>
+                <h2>Innowacje technologiczne</h2>
+                <p>Innowacje są kluczem do postępu. Odkryj, jakie nowości pojawiają się na rynku.</p>
+            </article>
+        </div>
+
+        <!-- Sekcja Gadżety technologiczne -->
+        <div id="gadgets" class="sub-section">
+            <article>
+                <h2>Gadżety technologiczne</h2>
+                <p>Sprawdź, jakie gadżety technologiczne mogą ułatwić Twoje życie.</p>
+            </article>
+        </div>
+
+        <!-- Sekcja Oprogramowanie -->
+        <div id="software" class="sub-section">
+            <article>
+                <h2>Oprogramowanie</h2>
+                <p>Poznaj najlepsze oprogramowanie, które zwiększy Twoją produktywność.</p>
+            </article>
+        </div>
+
+        <!-- Sekcja Wiadomości z branży -->
+        <div id="industry-news" class="sub-section">
+            <article>
+                <h2>Wiadomości z branży</h2>
+                <p>Najważniejsze wiadomości ze świata technologii i IT, które warto znać.</p>
+            </article>
+        </div>
+    </div>
+ <!-- Stopka strony -->
+ <footer>
+    <p>&copy; 2023 Blog Technologiczny. Wszelkie prawa zastrzeżone.</p>
+    <p>
+        Śledź mnie na Instagramie: 
+        <a href="https://www.instagram.com/miksoo8" target="_blank">
+            <img class="social-icon" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" />
+        </a>
+    </p>
+</footer>
+
+
+</body>
+</html>
