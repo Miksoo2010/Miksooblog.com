@@ -3,183 +3,320 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mój Blog Technologiczny</title>
+    <title>Blog Technologiczny</title>
     <style>
-        /* Reset stylów */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* Główne style */
+        /* Stylowanie ogólne */
         body {
             font-family: Arial, sans-serif;
-            color: #333;
-            background-color: #f4f4f4;
-            opacity: 0; /* Ukryj stronę przed animacją */
-            transition: opacity 1.5s ease-in; /* Animacja wejścia */
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
         }
-
-        /* Po załadowaniu strony */
-        body.loaded {
-            opacity: 1; /* Widoczna strona */
-        }
-
         header {
             background-color: #333;
             color: #fff;
-            padding: 10px 0;
+            padding: 10px 20px;
             text-align: center;
-            opacity: 0; /* Ukryj nagłówek */
-            animation: fadeIn 1.5s forwards; /* Animacja pojawiania */
-            animation-delay: 0.5s; /* Opóźnienie animacji */
         }
-
+        header h1 {
+            margin: 0;
+        }
         nav {
-            background-color: #555;
+            background-color: #444;
             padding: 10px;
             text-align: center;
-            opacity: 0;
-            animation: fadeIn 1.5s forwards;
-            animation-delay: 1s;
+            position: relative;
         }
-
         nav a {
             color: #fff;
             margin: 0 15px;
             text-decoration: none;
             font-weight: bold;
-            transition: color 0.3s;
+            cursor: pointer;
         }
-
-        nav a:hover {
-            color: #f4f4f4;
-        }
-
-        /* Styl dla głównej sekcji */
-        .content {
+        .container {
             max-width: 800px;
             margin: 20px auto;
             padding: 20px;
             background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            opacity: 0;
-            animation: fadeIn 1.5s forwards;
-            animation-delay: 1.5s;
         }
-
-        /* Styl dla sekcji */
-        section {
-            margin-bottom: 20px;
+        article {
+            margin-bottom: 30px;
         }
-
-        h1, h2 {
+        article h2 {
             color: #333;
-            margin-bottom: 10px;
         }
-
-        ul {
-            list-style-type: square;
-            margin-left: 20px;
+        article p {
+            line-height: 1.6;
+            color: #666;
         }
-
-        /* Instagram na dole strony */
-        .footer {
-            text-align: left;
-            padding: 20px;
+        article img {
+            max-width: 100%;
+            height: auto;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        footer {
             background-color: #333;
             color: #fff;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            opacity: 0;
-            animation: fadeIn 1.5s forwards;
-            animation-delay: 2s;
+            text-align: left; /* Zmiana na lewo */
+            padding: 10px 20px; /* Dodanie paddingu */
+            margin-top: 20px;
         }
-
-        .footer a {
-            color: #f4f4f4;
-            text-decoration: none;
-            font-weight: bold;
+        /* Sekcje stron */
+        .section, .sub-section {
+            display: none;
         }
-
-        .footer a:hover {
-            color: #ddd;
+        /* Stylowanie aktywnej sekcji */
+        .active {
+            display: block;
         }
-
-        /* Kluczowe klatki dla animacji */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        /* Stylowanie podzakładek */
+        .dropdown {
+            display: none;
+            background-color: #555;
+            position: absolute;
+            width: 150px;
+            text-align: left;
+            padding: 10px;
+        }
+        .dropdown a {
+            display: block;
+            color: #fff;
+            padding: 5px;
+        }
+        .nav-item {
+            position: relative;
+            display: inline-block;
+        }
+        /* Aktywne menu rozwijane */
+        .dropdown.active {
+            display: block;
+        }
+        /* Styl dla ikon społecznościowych */
+        .social-icon {
+            width: 30px;
+            height: 30px;
+            margin: 0 5px;
+            vertical-align: middle;
         }
     </style>
-</head>
-<body onload="document.body.classList.add('loaded')"> <!-- Animacja na załadowanie -->
+    <script>
+        // Funkcja przełączania sekcji strony
+        function showSection(sectionId) {
+            document.querySelectorAll('.section, .sub-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
 
-    <!-- Nagłówek -->
+        // Funkcja przełączania widoczności dropdown
+        function toggleDropdown(dropdownId) {
+            document.querySelectorAll('.dropdown').forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+            document.getElementById(dropdownId).classList.toggle('active');
+        }
+
+        // Funkcja zamykania dropdownów przy kliknięciu poza menu
+        document.addEventListener('click', function(event) {
+            const isDropdown = event.target.matches('.dropdown, .dropdown *');
+            const isNavLink = event.target.matches('.nav-item > a');
+            if (!isDropdown && !isNavLink) {
+                document.querySelectorAll('.dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+
+    <!-- Nagłówek strony -->
     <header>
-        <h1>Mój Blog Technologiczny</h1>
+        <h1>Blog Technologiczny</h1>
+        <p>Wiadomości, artykuły i porady z branży IT</p>
     </header>
 
-    <!-- Nawigacja -->
+    <!-- Menu nawigacyjne -->
     <nav>
-        <a href="#poradniki">Poradniki</a>
-        <a href="#swiat">Świat technologiczny</a>
-        <a href="#omnie">O mnie</a>
+        <a href="#" onclick="showSection('home')">Strona główna</a>
+        
+        <!-- Zakładka Poradniki z rozwijanym menu -->
+        <div class="nav-item">
+            <a href="#" onclick="toggleDropdown('guidesDropdown')">Poradniki</a>
+            <div id="guidesDropdown" class="dropdown">
+                <a href="#" onclick="showSection('updates')">Aktualizacje</a>
+                <a href="#" onclick="showSection('coding-tips')">Porady programistyczne</a>
+                <a href="#" onclick="showSection('best-practices')">Najlepsze praktyki</a>
+                <a href="#" onclick="showSection('tools')">Narzędzia technologiczne</a>
+                <a href="#" onclick="showSection('security')">Bezpieczeństwo w IT</a>
+                <a href="#" onclick="showSection('new-guide')">Nowy poradnik</a>
+            </div>
+        </div>
+
+        <!-- Zakładka O mnie z rozwijanym menu -->
+        <div class="nav-item">
+            <a href="#" onclick="toggleDropdown('aboutDropdown')">O mnie</a>
+            <div id="aboutDropdown" class="dropdown">
+                <a href="#" onclick="showSection('about-me')">Moja historia</a>
+                <a href="#" onclick="showSection('my-experience')">Moje doświadczenie</a>
+                <a href="#" onclick="showSection('my-goals')">Moje cele</a>
+            </div>
+        </div>
+
+        <!-- Zakładka Świat technologiczny z rozwijanym menu -->
+        <div class="nav-item">
+            <a href="#" onclick="toggleDropdown('techWorldDropdown')">Świat technologiczny</a>
+            <div id="techWorldDropdown" class="dropdown">
+                <a href="#" onclick="showSection('latest-tech')">Najnowsze technologie</a>
+                <a href="#" onclick="showSection('tech-trends')">Trendy technologiczne</a>
+                <a href="#" onclick="showSection('tech-innovations')">Innowacje technologiczne</a>
+                <a href="#" onclick="showSection('gadgets')">Gadżety technologiczne</a>
+                <a href="#" onclick="showSection('software')">Oprogramowanie</a>
+                <a href="#" onclick="showSection('industry-news')">Wiadomości z branży</a>
+            </div>
+        </div>
     </nav>
 
-    <!-- Zawartość -->
-    <div class="content">
-        <!-- Sekcja Poradniki -->
-        <section id="poradniki">
-            <h2>Poradniki</h2>
-            <ul>
-                <li><a href="#">Jak zainstalować Laragon na komputerze</a></li>
-                <li><a href="#">Tworzenie responsywnej strony internetowej</a></li>
-                <li><a href="#">Bezpieczeństwo w sieci - podstawowe zasady</a></li>
-                <li><a href="#">Najlepsze darmowe narzędzia dla programistów</a></li>
-                <li><a href="#">Podstawy języka HTML i CSS</a></li>
-                <li><a href="#">Zaawansowane funkcje JavaScript</a></li>
-                <li><a href="#">Wprowadzenie do Reacta</a></li>
-                <li><a href="#">Używanie GITa do zarządzania kodem</a></li>
-                <li><a href="#">Tworzenie aplikacji mobilnych z Flutter</a></li>
-                <!-- Dodaj więcej tematów tutaj -->
-            </ul>
-        </section>
+    <!-- Sekcja główna -->
+    <div class="container">
 
-        <!-- Sekcja Świat technologiczny -->
-        <section id="swiat">
-            <h2>Świat technologiczny</h2>
-            <ul>
-                <li><a href="#">Aktualności technologiczne</a></li>
-                <li><a href="#">Nowości w sztucznej inteligencji</a></li>
-                <li><a href="#">Recenzje sprzętu komputerowego</a></li>
-                <li><a href="#">Wydarzenia IT na świecie</a></li>
-                <li><a href="#">Edukacja i kursy online</a></li>
-                <li><a href="#">Najnowsze trendy w programowaniu</a></li>
-                <li><a href="#">Start-upy technologiczne</a></li>
-                <li><a href="#">Rozwój sieci 5G i IoT</a></li>
-                <!-- Dodaj więcej tematów tutaj -->
-            </ul>
-        </section>
+        <!-- Sekcja Strona Główna -->
+        <div id="home" class="section active">
+            <article>
+                <h2>Witamy na Blogu Technologicznym</h2>
+                <p>Znajdziesz tutaj najnowsze informacje o trendach technologicznych, tutoriale i porady, które pomogą Ci w rozwoju kariery w IT.</p>
+            </article>
+        </div>
+
+        <!-- Sekcja Aktualizacje -->
+        <div id="updates" class="sub-section">
+            <article>
+                <h2>Aktualizacje popularnych narzędzi deweloperskich</h2>
+                <img src="https://via.placeholder.com/800x400" alt="Aktualizacje narzędzi" />
+                <p>Nowe wersje popularnych frameworków i bibliotek przynoszą usprawnienia, które ułatwiają pracę i zwiększają wydajność.</p>
+            </article>
+        </div>
+
+        <!-- Sekcja Porady programistyczne -->
+        <div id="coding-tips" class="sub-section">
+            <article>
+                <h2>Porady programistyczne</h2>
+                <p>W tej sekcji znajdziesz praktyczne porady, które pomogą Ci w codziennej pracy programisty.</p>
+            </article>
+        </div>
+
+        <!-- Sekcja Najlepsze praktyki -->
+        <div id="best-practices" class="sub-section">
+            <article>
+                <h2>Najlepsze praktyki w programowaniu</h2>
+                <p>Dowiedz się, jakie są najlepsze praktyki w programowaniu, które pomogą Ci tworzyć lepszy kod.</p>
+            </article>
+        </div>
+
+        <!-- Sekcja Narzędzia technologiczne -->
+        <div id="tools" class="sub-section">
+            <article>
+                <h2>Narzędzia technologiczne</h2>
+                <p>Odkryj narzędzia, które mogą zwiększyć Twoją produktywność i ułatwić rozwój aplikacji.</p>
+            </article>
+        </div>
+
+        <!-- Sekcja Bezpieczeństwo w IT -->
+        <div id="security" class="sub-section">
+            <article>
+                <h2>Bezpieczeństwo w IT</h2>
+                <p>W dzisiejszym świecie bezpieczeństwo cyfrowe jest kluczowe. Dowiedz się, jak chronić swoje dane i systemy.</p>
+            </article>
+        </div>
+
+        <!-- Sekcja Nowy poradnik -->
+        <div id="new-guide" class="sub-section">
+            <article>
+                <h2>Nowy Poradnik</h2>
+                <p>Wkrótce dodamy nowe poradniki, które pomogą Ci w rozwoju umiejętności technologicznych.</p>
+            </article>
+        </div>
 
         <!-- Sekcja O mnie -->
-        <section id="omnie">
-            <h2>O mnie</h2>
-            <ul>
-                <li><a href="#">Moje doświadczenie</a></li>
-                <li><a href="#">Cele na przyszłość</a></li>
-                <li><a href="#">Hobby i zainteresowania</a></li>
-            </ul>
-        </section>
+        <div id="about-me" class="sub-section">
+            <article>
+                <h2>Moja historia</h2>
+                <p>Jestem pasjonatem technologii, który od wielu lat działa w branży IT. W tej sekcji opowiem Ci o mojej drodze do tego, co robię dzisiaj.</p>
+            </article>
+        </div>
+
+        <!-- Sekcja Moje doświadczenie -->
+        <div id="my-experience" class="sub-section">
+            <article>
+                <h2>Moje doświadczenie</h2>
+                <p>Pracowałem nad wieloma projektami, które pomogły mi rozwijać moje umiejętności i zdobywać nowe doświadczenia.</p>
+            </article>
+        </div>
+
+        <!-- Sekcja Moje cele -->
+        <div id="my-goals" class="sub-section">
+            <article>
+                <h2>Moje cele</h2>
+                <p>Moim celem jest ciągły rozwój w dziedzinie technologii oraz dzielenie się wiedzą z innymi.</p>
+            </article>
+        </div>
+
+        <!-- Sekcja Najnowsze technologie -->
+        <div id="latest-tech" class="sub-section">
+            <article>
+                <h2>Najnowsze technologie</h2>
+                <p>Zapoznaj się z najnowszymi rozwiązaniami technologicznymi, które zmieniają świat.</p>
+            </article>
+        </div>
+
+        <!-- Sekcja Trendy technologiczne -->
+        <div id="tech-trends" class="sub-section">
+            <article>
+                <h2>Trendy technologiczne</h2>
+                <p>Śledź najnowsze trendy w technologii i dowiedz się, co może przynieść przyszłość.</p>
+            </article>
+        </div>
+
+        <!-- Sekcja Innowacje technologiczne -->
+        <div id="tech-innovations" class="sub-section">
+            <article>
+                <h2>Innowacje technologiczne</h2>
+                <p>Innowacje są kluczem do postępu. Odkryj, jakie nowości pojawiają się na rynku.</p>
+            </article>
+        </div>
+
+        <!-- Sekcja Gadżety technologiczne -->
+        <div id="gadgets" class="sub-section">
+            <article>
+                <h2>Gadżety technologiczne</h2>
+                <p>Sprawdź, jakie gadżety technologiczne mogą ułatwić Twoje życie.</p>
+            </article>
+        </div>
+
+        <!-- Sekcja Oprogramowanie -->
+        <div id="software" class="sub-section">
+            <article>
+                <h2>Oprogramowanie</h2>
+                <p>Poznaj najlepsze oprogramowanie, które zwiększy Twoją produktywność.</p>
+            </article>
+        </div>
+
+        <!-- Sekcja Wiadomości z branży -->
+        <div id="industry-news" class="sub-section">
+            <article>
+                <h2>Wiadomości z branży</h2>
+                <p>Najważniejsze wiadomości ze świata technologii i IT, które warto znać.</p>
+            </article>
+        </div>
     </div>
 
-    <!-- Instagram w stopce -->
-    <div class="footer">
-        <p>Znajdź mnie na Instagramie: <a href="https://www.instagram.com/twoj_profil" target="_blank">@twoj_profil</a></p>
-    </div>
+    <!-- Sekcja stopki z linkiem do Instagramu -->
+    <footer>
+        <p>Znajdź mnie na Instagramie: <a href="https://www.instagram.com/twoje_konto" target="_blank" style="color: #fff;">@twoje_konto</a></p>
+    </footer>
 
 </body>
 </html>
