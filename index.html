@@ -17,13 +17,13 @@
             font-family: Arial, sans-serif;
             color: #333;
             background-color: #f4f4f4;
-            transition: opacity 1.5s ease-out; /* Animacja wejścia */
-            opacity: 0; /* Domyślnie niewidoczne, pojawi się po załadowaniu */
+            opacity: 0; /* Ukryj stronę przed animacją */
+            transition: opacity 1.5s ease-in; /* Animacja wejścia */
         }
 
         /* Po załadowaniu strony */
         body.loaded {
-            opacity: 1;
+            opacity: 1; /* Widoczna strona */
         }
 
         header {
@@ -31,12 +31,18 @@
             color: #fff;
             padding: 10px 0;
             text-align: center;
+            opacity: 0; /* Ukryj nagłówek */
+            animation: fadeIn 1.5s forwards; /* Animacja pojawiania */
+            animation-delay: 0.5s; /* Opóźnienie animacji */
         }
 
         nav {
             background-color: #555;
             padding: 10px;
             text-align: center;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards;
+            animation-delay: 1s;
         }
 
         nav a {
@@ -58,6 +64,9 @@
             padding: 20px;
             background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            animation: fadeIn 1.5s forwards;
+            animation-delay: 1.5s;
         }
 
         /* Styl dla sekcji */
@@ -85,6 +94,9 @@
             bottom: 0;
             left: 0;
             width: 100%;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards;
+            animation-delay: 2s;
         }
 
         .footer a {
@@ -96,9 +108,15 @@
         .footer a:hover {
             color: #ddd;
         }
+
+        /* Kluczowe klatki dla animacji */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
     </style>
 </head>
-<body onload="document.body.classList.add('loaded')"> <!-- Dodano animację przy ładowaniu -->
+<body onload="document.body.classList.add('loaded')"> <!-- Animacja na załadowanie -->
 
     <!-- Nagłówek -->
     <header>
@@ -108,8 +126,8 @@
     <!-- Nawigacja -->
     <nav>
         <a href="#poradniki">Poradniki</a>
-        <a href="#omnie">O mnie</a>
         <a href="#swiat">Świat technologiczny</a>
+        <a href="#omnie">O mnie</a>
     </nav>
 
     <!-- Zawartość -->
@@ -127,13 +145,8 @@
                 <li><a href="#">Wprowadzenie do Reacta</a></li>
                 <li><a href="#">Używanie GITa do zarządzania kodem</a></li>
                 <li><a href="#">Tworzenie aplikacji mobilnych z Flutter</a></li>
+                <!-- Dodaj więcej tematów tutaj -->
             </ul>
-        </section>
-
-        <!-- Sekcja O mnie -->
-        <section id="omnie">
-            <h2>O mnie</h2>
-            <p>Cześć! Jestem pasjonatem technologii i programistą, który uwielbia dzielić się wiedzą. Na tym blogu znajdziesz poradniki, recenzje i nowinki ze świata IT.</p>
         </section>
 
         <!-- Sekcja Świat technologiczny -->
@@ -148,6 +161,17 @@
                 <li><a href="#">Najnowsze trendy w programowaniu</a></li>
                 <li><a href="#">Start-upy technologiczne</a></li>
                 <li><a href="#">Rozwój sieci 5G i IoT</a></li>
+                <!-- Dodaj więcej tematów tutaj -->
+            </ul>
+        </section>
+
+        <!-- Sekcja O mnie -->
+        <section id="omnie">
+            <h2>O mnie</h2>
+            <ul>
+                <li><a href="#">Moje doświadczenie</a></li>
+                <li><a href="#">Cele na przyszłość</a></li>
+                <li><a href="#">Hobby i zainteresowania</a></li>
             </ul>
         </section>
     </div>
