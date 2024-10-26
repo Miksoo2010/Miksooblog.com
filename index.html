@@ -3,343 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog Technologiczny</title>
+    <title>Mój Blog Technologiczny</title>
     <style>
-        /* Stylowanie ogólne */
-        body {
-            font-family: Arial, sans-serif;
+        /* Reset stylów */
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5;
+            box-sizing: border-box;
         }
+
+        /* Główne style */
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            background-color: #f4f4f4;
+            transition: opacity 1.5s ease-out; /* Animacja wejścia */
+            opacity: 0; /* Domyślnie niewidoczne, pojawi się po załadowaniu */
+        }
+
+        /* Po załadowaniu strony */
+        body.loaded {
+            opacity: 1;
+        }
+
         header {
             background-color: #333;
             color: #fff;
-            padding: 10px 20px;
+            padding: 10px 0;
             text-align: center;
         }
-        header h1 {
-            margin: 0;
-        }
+
         nav {
-            background-color: #444;
+            background-color: #555;
             padding: 10px;
             text-align: center;
-            position: relative;
         }
+
         nav a {
             color: #fff;
             margin: 0 15px;
             text-decoration: none;
             font-weight: bold;
-            cursor: pointer;
+            transition: color 0.3s;
         }
-        .container {
+
+        nav a:hover {
+            color: #f4f4f4;
+        }
+
+        /* Styl dla głównej sekcji */
+        .content {
             max-width: 800px;
             margin: 20px auto;
             padding: 20px;
             background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        article {
-            margin-bottom: 30px;
+
+        /* Styl dla sekcji */
+        section {
+            margin-bottom: 20px;
         }
-        article h2 {
+
+        h1, h2 {
             color: #333;
+            margin-bottom: 10px;
         }
-        article p {
-            line-height: 1.6;
-            color: #666;
+
+        ul {
+            list-style-type: square;
+            margin-left: 20px;
         }
-        article img {
-            max-width: 100%;
-            height: auto;
-            margin: 15px 0;
-            border-radius: 5px;
-        }
-        footer {
+
+        /* Instagram na dole strony */
+        .footer {
+            text-align: left;
+            padding: 20px;
             background-color: #333;
             color: #fff;
-            text-align: left; /* Zmiana na lewo */
-            padding: 10px 20px; /* Dodanie paddingu */
-            margin-top: 20px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
         }
-        /* Sekcje stron */
-        .section, .sub-section {
-            display: none;
+
+        .footer a {
+            color: #f4f4f4;
+            text-decoration: none;
+            font-weight: bold;
         }
-        /* Stylowanie aktywnej sekcji */
-        .active {
-            display: block;
-        }
-        /* Stylowanie podzakładek */
-        .dropdown {
-            display: none;
-            background-color: #555;
-            position: absolute;
-            width: 150px;
-            text-align: left;
-            padding: 10px;
-        }
-        .dropdown a {
-            display: block;
-            color: #fff;
-            padding: 5px;
-        }
-        .nav-item {
-            position: relative;
-            display: inline-block;
-        }
-        /* Aktywne menu rozwijane */
-        .dropdown.active {
-            display: block;
-        }
-        /* Styl dla ikon społecznościowych */
-        .social-icon {
-            width: 30px;
-            height: 30px;
-            margin: 0 5px;
-            vertical-align: middle;
+
+        .footer a:hover {
+            color: #ddd;
         }
     </style>
-    <script>
-        // Funkcja przełączania sekcji strony
-        function showSection(sectionId) {
-            document.querySelectorAll('.section, .sub-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.getElementById(sectionId).classList.add('active');
-        }
-
-        // Funkcja przełączania widoczności dropdown
-        function toggleDropdown(dropdownId) {
-            document.querySelectorAll('.dropdown').forEach(dropdown => {
-                dropdown.classList.remove('active');
-            });
-            document.getElementById(dropdownId).classList.toggle('active');
-        }
-
-        // Funkcja zamykania dropdownów przy kliknięciu poza menu
-        document.addEventListener('click', function(event) {
-            const isDropdown = event.target.matches('.dropdown, .dropdown *');
-            const isNavLink = event.target.matches('.nav-item > a');
-            if (!isDropdown && !isNavLink) {
-                document.querySelectorAll('.dropdown').forEach(dropdown => {
-                    dropdown.classList.remove('active');
-                });
-            }
-        });
-    </script>
 </head>
-<body>
+<body onload="document.body.classList.add('loaded')"> <!-- Dodano animację przy ładowaniu -->
 
-    <!-- Nagłówek strony -->
+    <!-- Nagłówek -->
     <header>
-        <h1>MIKSOOBLOG</h1>
-        <p>Wiadomości, artykuły i porady z branży IT</p>
+        <h1>Mój Blog Technologiczny</h1>
     </header>
 
-    <!-- Menu nawigacyjne -->
+    <!-- Nawigacja -->
     <nav>
-        <a href="#" onclick="showSection('home')">Strona główna</a>
-        
-        <!-- Zakładka Poradniki z rozwijanym menu -->
-        <div class="nav-item">
-            <a href="#" onclick="toggleDropdown('guidesDropdown')">Poradniki</a>
-            <div id="guidesDropdown" class="dropdown">
-                <a href="#" onclick="showSection('updates')">Aktualizacje</a>
-                <a href="#" onclick="showSection('coding-tips')">Porady programistyczne</a>
-                <a href="#" onclick="showSection('best-practices')">Najlepsze praktyki</a>
-                <a href="#" onclick="showSection('tools')">Narzędzia technologiczne</a>
-                <a href="#" onclick="showSection('security')">Bezpieczeństwo w IT</a>
-                <a href="#" onclick="showSection('new-guide')">Nowy poradnik</a>
-            </div>
-        </div>
-
-        <!-- Zakładka O mnie z rozwijanym menu -->
-        <div class="nav-item">
-            <a href="#" onclick="toggleDropdown('aboutDropdown')">O mnie</a>
-            <div id="aboutDropdown" class="dropdown">
-                <a href="#" onclick="showSection('about-me')">Moja historia</a>
-                <a href="#" onclick="showSection('my-experience')">Moje doświadczenie</a>
-                <a href="#" onclick="showSection('my-goals')">Moje cele</a>
-            </div>
-        </div>
-
-        <!-- Zakładka Świat technologiczny z rozwijanym menu -->
-        <div class="nav-item">
-            <a href="#" onclick="toggleDropdown('techWorldDropdown')">Świat technologiczny</a>
-            <div id="techWorldDropdown" class="dropdown">
-                <a href="#" onclick="showSection('latest-tech')">Wiadomości technologiczne</a>
-                <a href="#" onclick="showSection('tech-trends')">Trendy technologiczne</a>
-                <a href="#" onclick="showSection('tech-innovations')">Innowacje technologiczne</a>
-                <a href="#" onclick="showSection('gadgets')">Gadżety technologiczne</a>
-                <a href="#" onclick="showSection('software')">Oprogramowanie</a>
-                <a href="#" onclick="showSection('industry-news')">Wiadomości z branży</a>
-            </div>
-        </div>
+        <a href="#poradniki">Poradniki</a>
+        <a href="#omnie">O mnie</a>
+        <a href="#swiat">Świat technologiczny</a>
     </nav>
 
-    <!-- Sekcja główna -->
-    <div class="container">
-
-        <!-- Sekcja Strona Główna -->
-        <div id="home" class="section active">
-            <article>
-                <h2>Witamy na MIKSOOBLOG</h2>
-                <p>Witaj na moim blogu, tutaj sie dowiesz o moim zyciu i o technologi 
-                    ZAPRASZAM Cię na zakładki gdzie bedziesz mogł skorzystac z jakiego poradnika lub obserowac swiat technologiczny</p>
-            </article>
-        </div>
-
-        <!-- Sekcja Aktualizacje -->
-        <div id="updates" class="sub-section">
-            <article>
-                <h2>Aktualizacje popularnych narzędzi deweloperskich</h2>
-                <img src="https://via.placeholder.com/800x400" alt="Aktualizacje narzędzi" />
-                <p>Nowe wersje popularnych frameworków i bibliotek przynoszą usprawnienia, które ułatwiają pracę i zwiększają wydajność.</p>
-            </article>
-        </div>
-
-        <!-- Sekcja Porady programistyczne -->
-        <div id="coding-tips" class="sub-section">
-            <article>
-                <h2>Porady programistyczne</h2>
-                <p>W tej sekcji znajdziesz praktyczne porady, które pomogą Ci w codziennej pracy programisty.</p>
-            </article>
-        </div>
-
-        <!-- Sekcja Najlepsze praktyki -->
-        <div id="best-practices" class="sub-section">
-            <article>
-                <h2>Najlepsze praktyki w programowaniu</h2>
-                <p>Dowiedz się, jakie są najlepsze praktyki w programowaniu, które pomogą Ci tworzyć lepszy kod.</p>
-            </article>
-        </div>
-
-        <!-- Sekcja Narzędzia technologiczne -->
-        <div id="tools" class="sub-section">
-            <article>
-                <h2>Narzędzia technologiczne</h2>
-                <p>Odkryj narzędzia, które mogą zwiększyć Twoją produktywność i ułatwić rozwój aplikacji.</p>
-            </article>
-        </div>
-
-        <!-- Sekcja Bezpieczeństwo w IT -->
-        <div id="security" class="sub-section">
-            <article>
-                <h2>Bezpieczeństwo w IT</h2>
-                <p>W dzisiejszym świecie bezpieczeństwo cyfrowe jest kluczowe. Dowiedz się, jak chronić swoje dane i systemy.</p>
-            </article>
-        </div>
-
-        <!-- Sekcja Nowy poradnik -->
-        <div id="new-guide" class="sub-section">
-            <article>
-                <h2>Nowy Poradnik</h2>
-                <p>Wkrótce dodamy nowe poradniki, które pomogą Ci w rozwoju umiejętności technologicznych.</p>
-            </article>
-        </div>
+    <!-- Zawartość -->
+    <div class="content">
+        <!-- Sekcja Poradniki -->
+        <section id="poradniki">
+            <h2>Poradniki</h2>
+            <ul>
+                <li><a href="#">Jak zainstalować Laragon na komputerze</a></li>
+                <li><a href="#">Tworzenie responsywnej strony internetowej</a></li>
+                <li><a href="#">Bezpieczeństwo w sieci - podstawowe zasady</a></li>
+                <li><a href="#">Najlepsze darmowe narzędzia dla programistów</a></li>
+                <li><a href="#">Podstawy języka HTML i CSS</a></li>
+                <li><a href="#">Zaawansowane funkcje JavaScript</a></li>
+                <li><a href="#">Wprowadzenie do Reacta</a></li>
+                <li><a href="#">Używanie GITa do zarządzania kodem</a></li>
+                <li><a href="#">Tworzenie aplikacji mobilnych z Flutter</a></li>
+            </ul>
+        </section>
 
         <!-- Sekcja O mnie -->
-        <div id="about-me" class="sub-section">
-            <article>
-                <h2>Moja historia</h2>
-                <p>Jestem pasjonatem technologii, który od wielu lat działa w branży IT. W tej sekcji opowiem Ci o mojej drodze do tego, co robię dzisiaj.</p>
-            </article>
-        </div>
+        <section id="omnie">
+            <h2>O mnie</h2>
+            <p>Cześć! Jestem pasjonatem technologii i programistą, który uwielbia dzielić się wiedzą. Na tym blogu znajdziesz poradniki, recenzje i nowinki ze świata IT.</p>
+        </section>
 
-        <!-- Sekcja Moje doświadczenie -->
-        <div id="my-experience" class="sub-section">
-            <article>
-                <h2>Moje doświadczenie</h2>
-                <p>Pracowałem nad wieloma projektami, które pomogły mi rozwijać moje umiejętności i zdobywać nowe doświadczenia.</p>
-            </article>
-        </div>
-
-        <!-- Sekcja Moje cele -->
-        <div id="my-goals" class="sub-section">
-            <article>
-                <h2>Moje cele</h2>
-                <p>Moim celem jest ciągły rozwój w dziedzinie technologii oraz dzielenie się wiedzą z innymi.</p>
-            </article>
-        </div>
-
-        <!-- Sekcja Najnowsze technologie -->
-        <div id="latest-tech" class="sub-section">
-            <article>
-                <h2>Wiadomości technologiczne</h2>
-                <p>Tutaj bedą Aktualizowane Wiadomości technologiczne:</p>
-                <p>25 Października 2024</p>
-                <p>Godz: 18:00</p>
-                <p>Banki wyłączają się w ten weekend. Będą problemy z dostępem do aplikacji</p>
-                <P>
-                    mBank – aplikacja i płatności w sieci
-                    Bank zaplanował prace techniczne na noc 26/27 listopada – dokładnie wtedy, gdy przechodzimy na czas zimowy i o godz. 3:00 cofamy zegarki na 2:00. 
-                    Wtedy też rozpocznie się przerwa techniczna, która potrwa do godziny 7:00. 
-                    W tym czasie będą utrudnione zakupy w internecie - płatność kartą online zostanie chwilowo wyłączona.
-                    Dodatkowo klienci nie zalogują się do aplikacji mobilnej oraz bankowości internetowej. Nie będzie możliwości wykonania żadnej czynności, do której jest potrzebne logowanie – m.in. przelew na konto BLIK i nie tylko.  
-                    Co ważne, karty mają działać bez większego problemu w sklepach stacjonarnych, restauracjach i bankomatach.
-                    </P>
-                <p>Godz: 6:00</p>
-                <p>Intel wygrał z UE. TSUE stanął po stronie technologicznego giganta</p>
-                <p>Trybunał Sprawiedliwości UE orzekł w czwartek na korzyść Intela, 
-                kończąc trwający prawie dwie dekady spór między amerykańskim producentem chipów a Komisją Europejską, która twierdziła, 
-                że koncern nadużywa pozycji dominującej na rynku mikroprocesorów.</p>
-            </article>
-        </div>
-
-        <!-- Sekcja Trendy technologiczne -->
-        <div id="tech-trends" class="sub-section">
-            <article>
-                <h2>Trendy technologiczne</h2>
-                <p>Śledź najnowsze trendy w technologii i dowiedz się, co może przynieść przyszłość.</p>
-            </article>
-        </div>
-
-        <!-- Sekcja Innowacje technologiczne -->
-        <div id="tech-innovations" class="sub-section">
-            <article>
-                <h2>Innowacje technologiczne</h2>
-                <p>Innowacje są kluczem do postępu. Odkryj, jakie nowości pojawiają się na rynku.</p>
-            </article>
-        </div>
-
-        <!-- Sekcja Gadżety technologiczne -->
-        <div id="gadgets" class="sub-section">
-            <article>
-                <h2>Gadżety technologiczne</h2>
-                <p>Sprawdź, jakie gadżety technologiczne mogą ułatwić Twoje życie.</p>
-            </article>
-        </div>
-
-        <!-- Sekcja Oprogramowanie -->
-        <div id="software" class="sub-section">
-            <article>
-                <h2>Oprogramowanie</h2>
-                <p>Poznaj najlepsze oprogramowanie, które zwiększy Twoją produktywność.</p>
-            </article>
-        </div>
-
-        <!-- Sekcja Wiadomości z branży -->
-        <div id="industry-news" class="sub-section">
-            <article>
-                <h2>Wiadomości z branży</h2>
-                <p>Najważniejsze wiadomości ze świata technologii i IT, które warto znać.</p>
-            </article>
-        </div>
+        <!-- Sekcja Świat technologiczny -->
+        <section id="swiat">
+            <h2>Świat technologiczny</h2>
+            <ul>
+                <li><a href="#">Aktualności technologiczne</a></li>
+                <li><a href="#">Nowości w sztucznej inteligencji</a></li>
+                <li><a href="#">Recenzje sprzętu komputerowego</a></li>
+                <li><a href="#">Wydarzenia IT na świecie</a></li>
+                <li><a href="#">Edukacja i kursy online</a></li>
+                <li><a href="#">Najnowsze trendy w programowaniu</a></li>
+                <li><a href="#">Start-upy technologiczne</a></li>
+                <li><a href="#">Rozwój sieci 5G i IoT</a></li>
+            </ul>
+        </section>
     </div>
- <!-- Stopka strony -->
- <footer>
-    <p>&copy; 2023 Blog Technologiczny. Wszelkie prawa zastrzeżone.</p>
-    <p>
-        Śledź mnie na Instagramie: 
-        <a href="https://www.instagram.com/miksoo8" target="_blank">
-            <img class="social-icon" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" />
-        </a>
-    </p>
-</footer>
 
+    <!-- Instagram w stopce -->
+    <div class="footer">
+        <p>Znajdź mnie na Instagramie: <a href="https://www.instagram.com/twoj_profil" target="_blank">@twoj_profil</a></p>
+    </div>
 
 </body>
 </html>
